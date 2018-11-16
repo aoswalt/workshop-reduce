@@ -4,6 +4,31 @@ Walking through the basics of the `reduce` method (also known as `foldr`) for co
 
 ## Introduction
 
+Collections are one of the fundamental building blocks of software. Because of this, languages provide abstracted methods to simplify working with them.
+
+A couple of the common methods are `map` for transforming each element of a collection, and `filter` for obtaining a limited selection of elements of the collection.
+
+The `reduce` method can be thought of as the "Swiss army knife" of collections: any of the other collection methods can be implemented with it.
+
+### Anatomy
+
+There are 2 parts to reduce: the `accumulator` and the `reducer` function.
+
+#### Accumulator
+
+The accumulator is threaded through reduce by 3 aspects:
+* Optionally starting with an initial value
+* Collecting changes from each step
+* The final return value
+
+#### Reducer
+
+The reducer function takes the current accumulator value and an element from the collection and returns the modified accumulator for the next step.
+
+This function should be pure and without side-effects, and it should avoid mutating the passed in values.
+
+## simple sum
+
 ```javascript
 const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
@@ -11,8 +36,6 @@ const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```javascript
 const add = (a, b) => a + b
 ```
-
-## simple sum
 
 ```javascript
 nums.reduce(add)
