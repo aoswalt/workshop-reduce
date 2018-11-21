@@ -21,6 +21,8 @@ The accumulator is threaded through reduce by 3 aspects:
 * Collecting changes from each step
 * The final return value
 
+The initial value for the accumulator is optional. If a value is given, the first operation will be called on the first element with that value as the accumulator. If no initial value is given, the first operation will be called on the second element with the first element as the accumulator.
+
 #### Reducer
 
 The reducer function takes the current accumulator value and an element from the collection and returns the modified accumulator for the next step.
