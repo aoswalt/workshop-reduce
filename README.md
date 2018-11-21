@@ -29,32 +29,40 @@ The reducer function takes the current accumulator value and an element from the
 
 This function should be pure and without side-effects, and it should avoid mutating the passed in values.
 
-## simple sum
+## Simple Sum
+
+One of the most straightforward ways to see reduce is in summing a list of numbers.
+
+With an array of numbers 1 through 10:
 
 ```javascript
-const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
+
+And a function that adds 2 numbers:
 
 ```javascript
 const add = (a, b) => a + b
 ```
 
+We can apply the `add` function to the array with the `reduce` method, "reducing" the collection to a single value.
+
 ```javascript
-nums.reduce(add)
+numbers.reduce(add)
 // 55
 ```
 
-with accumulator
+Because our resulting value is the same type as the elements in the array, we can skip the initial value. If desired, we could provide an initial value and get the same result.
 
 ```javascript
-nums.reduce(add, 0)
+numbers.reduce(add, 0)
 // 55
 ```
 
-with accumulator of initial value
+However, if we have a starting amount, we could provide it as the initial value instead of adding the values afterwards.
 
 ```javascript
-nums.reduce(add, 10)
+numbers.reduce(add, 10)
 // 65
 ```
 
@@ -117,7 +125,7 @@ map
 const addToArray = (arr, v) => [...arr, v]
 const addDoubledToArray = (arr, n) => addToArray(arr, n * 2)
 
-nums.reduce(addDoubledToArray, [])
+numbers.reduce(addDoubledToArray, [])
 // [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 ]
 ```
 
@@ -126,14 +134,14 @@ filter
 ```javascript
 const keepIfEven = (arr, n) => (n % 2 ? arr : [...arr, n])
 
-nums.reduce(keepIfEven, [])
+numbers.reduce(keepIfEven, [])
 // [ 2, 4, 6, 8, 10 ]
 ```
 
 chainable because returning another array
 
 ```javascript
-nums
+numbers
   .reduce(keepIfEven, [])
   .reduce(addDoubledToArray, [])
 // [ 4, 8, 12, 16, 20 ]
