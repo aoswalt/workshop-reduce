@@ -66,15 +66,19 @@ numbers.reduce(add, 10)
 // 65
 ```
 
-## more complex sum
+## Counting Letters
 
-string
+Let's use reduce to count the number of letters in a message.
+
+Any string will do, but I think one relevant to what we are donig is appropriate:
 
 ```javascript
 const string = 'This is a string of text to use to count the occurances of letters.'
 ```
 
-split into letter array
+By itself, we cannot iterate over a string, so we neet to `split` it. Since we only care about the letters, we can convert the string to lower case and remove any non-letter characters.
+
+Ultimately, this leaves us with an array of all letter characters from the string:
 
 ```javascript
 const letters = string
@@ -83,7 +87,9 @@ const letters = string
   .split('')
 ```
 
-function to increment count for a letter
+To count the letters, we can use an object with the letters as keys and counts as values. This will be our accumulator.
+
+Our reducer function should accept the accumulated object of counts and current letter, and it should return a new object with updated values, keeping with the expected immutability of `reduce`.
 
 ```javascript
 const countLetter = (counts, letter) => ({
@@ -92,7 +98,7 @@ const countLetter = (counts, letter) => ({
 })
 ```
 
-intial accumulator is important without making fn more complex
+Because our reducer function is expected an object as the accumulator, we should provide an empty object as our initial value.
 
 ```javascript
 letters.reduce(countLetter, {})
