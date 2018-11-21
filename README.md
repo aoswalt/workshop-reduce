@@ -123,19 +123,28 @@ letters.reduce(countLetter, {})
 */
 ```
 
-## other array methods
+## Implementing Other Array Methods
 
-map
+Because of the flexibility of `reduce`, the other array methods can be implemented with it.
+
+### Map
+
+The `map` method constructs a new array, applying an operation to each element in the array.
+
+With `reduce`, each step can spread the current array along with the new element.
 
 ```javascript
-const addToArray = (arr, v) => [...arr, v]
-const addDoubledToArray = (arr, n) => addToArray(arr, n * 2)
+const addDoubledToArray = (arr, n) => [...arr, n * 2]
 
 numbers.reduce(addDoubledToArray, [])
 // [ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 ]
 ```
 
-filter
+### Filter
+
+Similarily, `filter` returns a new array, but it only keeps the elements passing a condition.
+
+This can be done at each step by either returning the current array or returning an array with the element added.
 
 ```javascript
 const keepIfEven = (arr, n) => (n % 2 ? arr : [...arr, n])
@@ -144,7 +153,9 @@ numbers.reduce(keepIfEven, [])
 // [ 2, 4, 6, 8, 10 ]
 ```
 
-chainable because returning another array
+### Chainability
+
+As with the built-in array methods, these reduce methods can be chained since they each return an array.
 
 ```javascript
 numbers
