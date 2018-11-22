@@ -217,3 +217,119 @@ options.reduce(
 }
 */
 ```
+
+## Processing Actions
+
+So far, we have been working with sets of data. What if we instead want to handle actions that are performed?
+
+As a simple example, let's build a calculator.
+
+### Action Object
+
+Let's define a structure to fit our actions.
+
+Actions will have a `type` to differentiate them.
+
+```javascript
+{ type: 'RESET' }
+```
+
+Actions may have data associated with them. If we standardize on the key of `data`, we can handle them with a consistent pattern. Different sets of actions can have different types of values under `data`, but it will be a standardized but optional key.
+
+```javascript
+{ type: 'ADD', data: 1 }
+```
+
+We could add more fields if they are needed, but these will serve the majority of cases.
+
+### Handling an Action
+
+With the thought of building up a set of handlers for the actions, the most straightforward implementation is a switch statement.
+
+First, we should set up a default case as a fallback. It should simply print a message to the console and return the value unchanged.
+
+```javascript
+const handleAction = (value, action) => {
+  const { type, data } = action
+
+  switch(type) {
+    default:
+      console.warn('Unhandled action:', action)
+      return value
+  }
+}
+```
+
+Let's implement our first action: an addition.
+
+```javascript
+const handleAction = (value, action) => {
+  const { type, data } = action
+
+  switch(type) {
+    case 'ADD':
+      return value + data
+    default:
+      console.warn('Unhandled action:', action)
+      return value
+  }
+}
+```
+
+### Processing a Set of Actions
+
+Assuming that we have collected a series of actions, we can use `reduce` to process them all to get the resulting value.
+
+```javascript
+[
+  { type: 'ADD', data: 1 },
+  { type: 'ADD', data: 2 },
+  { type: 'ADD', data: 3 },
+].reduce(handleAction, 0)
+// 6
+```
+
+Because we have accounted for actions that are not implemented, the processing does not break if an unexpected action is included.
+
+```javascript
+[
+  { type: 'ADD', data: 1 },
+  { type: 'ADD', data: 2 },
+  { type: 'SUBTRACT', data: 1 },
+  { type: 'ADD', data: 3 },
+].reduce(handleAction, 0)
+// Unhandled action: { type: 'SUBTRACT', data: 0 }
+// 6
+```
+
+### Adding an Action Type
+
+By simply adding another `case` statement, we can account for another action. Let's handle the `SUBTRACT` action.
+
+```javascript
+const handleAction = (value, action) => {
+  const { type, data } = action
+
+  switch(type) {
+    case 'ADD':
+      return value + data
+    case 'SUBTRACT':
+      return value - data
+    default:
+      console.warn('Unhandled action:', action)
+      return value
+  }
+}
+```
+
+With that in place, we no longer get a warning, and calculations are performed as expected.
+
+```javascript
+[
+  { type: 'ADD', data: 1 },
+  { type: 'ADD', data: 2 },
+  { type: 'SUBTRACT', data: 1 },
+  { type: 'ADD', data: 3 },
+].reduce(handleAction, 0)
+// 5
+```
