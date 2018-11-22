@@ -164,54 +164,25 @@ numbers
 // [ 4, 8, 12, 16, 20 ]
 ```
 
-## more complex arrays
+## Manipulating Arrays of Objects
 
-a set of menu options
+Frequently, we encounter arrays of objects: api responses, option lists, etc. By making use of `reduce`, we can adapt these collections for when their original shapes are cumbersome to work with.
+
+As an example, let's work with a set of menu options:
 
 ```javascript
 const options = [
-  { label: 'First', value: 1 },
-  { label: 'Second', value: 2 },
-  { label: 'Third', value: 3 },
-  { label: 'Fourth', value: 4 },
-  { label: 'Fifth', value: 5 },
+  { label: 'First', value: opt1 },
+  { label: 'Second', value: opt2 },
+  { label: 'Third', value: opt3 },
+  { label: 'Fourth', value: opt4 },
+  { label: 'Fifth', value: opt5 },
 ]
 ```
 
-getting an array only the values
+When an option is selected, we will typically have only the `value` of the option.
 
-```javascript
-options.reduce((arr, { value }) => [...arr, value], [])
-// [ 1, 2, 3, 4, 5 ]
-```
-
-the same but with the labels instead
-
-```javascript
-options.reduce((arr, { label }) => [...arr, label], [])
-// [ 'First', 'Second', 'Third', 'Fourth', 'Fifth' ]
-```
-
-changing to object for O(1) lookup
-turning the array into an object with the label property as keys
-
-```javascript
-options.reduce(
-  (acc, o) => ({ ...acc, [o.label]: o }),
-  {},
-)
-/*
-{
-  First: { label: 'First', value: 1 },
-  Second: { label: 'Second', value: 2 },
-  Third: { label: 'Third', value: 3 },
-  Fourth: { label: 'Fourth', value: 4 },
-  Fifth: { label: 'Fifth', value: 5 },
-}
-*/
-```
-
-turning the array into an object with the value property as keys
+To get the full option, one option is to use the `find` array method; however, this is inefficient because each item must be checked individually until the desired one is found. A more performant approach is to convert the array into an object with each option stored by its `value` property.
 
 ```javascript
 options.reduce(
@@ -220,11 +191,29 @@ options.reduce(
 )
 /*
 {
-  '1': { label: 'First', value: 1 },
-  '2': { label: 'Second', value: 2 },
-  '3': { label: 'Third', value: 3 },
-  '4': { label: 'Fourth', value: 4 },
-  '5': { label: 'Fifth', value: 5 },
+  opt1: { label: 'First', value: opt1 },
+  opt2: { label: 'Second', value: opt2 },
+  opt3: { label: 'Third', value: opt3 },
+  opt4: { label: 'Fourth', value: opt4 },
+  opt5: { label: 'Fifth', value: opt5 },
+}
+*/
+```
+
+If we needed to access each option by its `label` instead, it is as trivial as using it as the object key instead of the `value`.
+
+```javascript
+options.reduce(
+  (acc, o) => ({ ...acc, [o.label]: o }),
+  {},
+)
+/*
+{
+  First: { label: 'First', value: opt1 },
+  Second: { label: 'Second', value: opt2 },
+  Third: { label: 'Third', value: opt3 },
+  Fourth: { label: 'Fourth', value: opt4 },
+  Fifth: { label: 'Fifth', value: opt5 },
 }
 */
 ```
