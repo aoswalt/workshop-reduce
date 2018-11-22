@@ -340,12 +340,12 @@ Working with a static set of data is straightforward enough, but we can expand t
 
 Instead of calling `reduce` on a set of actions, we need to build a mechanism to perform the same type of processing.
 
-We need to handle 3 primary things:
-* Take an initial value
+It should handle 3 primary things:
+* Take an optional initial value
 * Accept ongoing actions
 * Get the current value
 
-Ultimately, this can boil down to a function that maintains state, and it returns an object with 2 properties: `takeAction` and `getValue`. We can provide `takeAction` with an action object to update the internal value, and `getValue` will return the value at the current time.
+Ultimately, this can boil down to a function that maintains state, and it returns an object with 2 properties: `takeAction` and `getValue`. We can provide `takeAction` with an action object to update the internal value, and `getValue` will return the current value.
 
 ```javascript
 const createCalculator = (initialValue = 0) => {
@@ -362,7 +362,7 @@ const createCalculator = (initialValue = 0) => {
 
 With this in place, we can implement our dynamic actions.
 
-To start with, we create our stateful data object for our calculator:
+To start with, we create our stateful calculator:
 
 ```javascript
 const calculator = createCalculator()
@@ -384,4 +384,4 @@ calculator.getValue()
 // 5
 ```
 
-This is one of the foundational concepts of [redux](https://github.com/reduxjs/redux): make immutable changes through actions while getting the value as needed.
+This is one of the foundational concepts of [redux](https://github.com/reduxjs/redux): action objects represent the desired operations but the work is done internally.
