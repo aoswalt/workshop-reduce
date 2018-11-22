@@ -348,7 +348,7 @@ We need to handle 3 primary things:
 Ultimately, this can boil down to a function that maintains state, and it returns an object with 2 properties: `takeAction` and `getValue`. We can provide `takeAction` with an action object to update the internal value, and `getValue` will return the value at the current time.
 
 ```javascript
-const createCalculator = initialValue => {
+const createCalculator = (initialValue = 0) => {
   let currentValue = initialValue
   const getValue = () => currentValue
 
@@ -365,7 +365,7 @@ With this in place, we can implement our dynamic actions.
 To start with, we create our stateful data object for our calculator:
 
 ```javascript
-const calculator = createCalculator(0)
+const calculator = createCalculator()
 ```
 
 Now, we can give it actions from anywhere to change its current value. Let's make use of the same operations that we did before.
