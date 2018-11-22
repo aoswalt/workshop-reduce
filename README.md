@@ -333,3 +333,55 @@ With that in place, we no longer get a warning, and calculations are performed a
 ].reduce(handleAction, 0)
 // 5
 ```
+
+### Making It Dynamic (Bonus)
+
+Working with a static set of data is straightforward enough, but we can expand the action processing concept to be dynamic while making use of the same reducer function.
+
+Instead of calling `reduce` on a set of actions, we need to build a mechanism to perform the same type of processing.
+
+We need to handle 3 primary things:
+* Take an initial value
+* Accept ongoing actions
+* Get the current value
+
+Ultimately, this can boil down to a function that maintains state, and it returns an object with 2 properties: `takeAction` and `getValue`. We can provide `takeAction` with an action object to update the internal value, and `getValue` will return the value at the current time.
+
+```javascript
+const createData = initialValue => {
+  let currentValue = initialValue
+  const getValue = () => currentValue
+
+  const takeAction = action => {
+    currentValue = handleAction(currentValue, action)
+  }
+
+  return { takeAction, getValue }
+}
+```
+
+With this in place, we can implement our dynamic actions.
+
+To start with, we create our stateful data object for our calculator:
+
+```javascript
+const calculator = createData(0)
+```
+
+Now, we can give it actions from anywhere to change its current value. Let's make use of the same operations that we did before.
+
+```javascript
+calculator.takeAction({ type: 'ADD', data: 1 })
+calculator.takeAction({ type: 'ADD', data: 2 })
+calculator.takeAction({ type: 'SUBTRACT', data: 1 })
+calculator.takeAction({ type: 'ADD', data: 3 })
+```
+
+At any point, we can call `getValue` to get the current value of the calculator.
+
+```javascript
+calculator.getValue()
+// 5
+```
+
+This is one of the foundational concepts of [redux](https://github.com/reduxjs/redux): make immutable changes through actions while getting the value as needed.
