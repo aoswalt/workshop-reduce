@@ -8,7 +8,7 @@ Collections are one of the fundamental building blocks of software. Because of t
 
 A couple of the common methods are `map` for transforming each element of a collection, and `filter` for obtaining a limited selection of elements of the collection.
 
-The `reduce` method can be thought of as the "Swiss army knife" of collections: any of the other collection methods can be implemented with it.
+The `reduce` method can be thought of as the "Swiss army knife" of collections: it can fulfill a wide variety of applications, including implementing any of the other collection methods.
 
 ### Anatomy
 
