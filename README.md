@@ -1,6 +1,6 @@
 # Workshop: Reduce
 
-Walking through the basics of the `reduce` method (also known as `foldr`) for collections, specifically in JavaScript.
+Walking through the basics of the `reduce` method (also known as `foldl`) for collections, specifically in JavaScript.
 
 ## Introduction
 
