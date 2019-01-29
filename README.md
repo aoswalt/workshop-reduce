@@ -70,7 +70,7 @@ numbers.reduce(add, 10)
 
 Let's use reduce to count the number of letters in a message.
 
-Any string will do, but I think one relevant to what we are donig is appropriate:
+Any string will do, but I think one relevant to what we are doing is appropriate:
 
 ```javascript
 const string = 'This is a string of text to use to count the occurances of letters.'
@@ -98,7 +98,7 @@ const countLetter = (counts, letter) => ({
 })
 ```
 
-Because our reducer function is expected an object as the accumulator, we should provide an empty object as our initial value.
+Because our reducer function is expecting an object as the accumulator, we should provide an empty object as our initial value.
 
 ```javascript
 letters.reduce(countLetter, {})
